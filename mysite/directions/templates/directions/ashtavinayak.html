@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Directions Service</title>
+      <style>
+        #map {
+          height: 100%;
+        }
+        html,
+        body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        }
+         #floating-panel {
+          position: absolute;
+          top: 10px;
+          left: 25%;
+          z-index: 5;
+          background-color: #fff;
+          padding: 5px;
+          border: 1px solid #999;
+          text-align: center;
+          font-family: "Roboto", "sans-serif";
+         line-height: 30px;
+          padding-left: 10px;
+        }
+      </style>
+  </head>
+  <body>
+    <h2>Directions Result</h2>
+
+
+
+    <div id="floating-panel">
+      <b>Start: </b>
+      <select id="start">
+        <option value="Khopoli Ganpati Mahad Rd, Mahad, Maharashtra 410203, India">Shri VaradVinayak</option>
+        <option value="SH92, Pali, Maharashtra 410205, India">Shri Ballaleshwar</option>
+        <option value="Q63R+MP3, MH SH 27, Ranjangaon, Maharashtra 412209, India">Shri MahaGanapati - Ranjangaon</option>
+        <option value="Theur Rd, Theur, Maharashtra 412110, India">Shri Chintamani</option>
+        <option value="Siddhatek, Siddhtek, Maharashtra 414403, India">Shri SiddhiVinayak - Siddhatek</option>
+        <option value="78H8+6XW, Morgaon, Maharashtra 412304, India">Shri Mayureshwar - Morgaon</option>
+        <option value="Shree Vighnahar Ganapati Mandir,Ozar, Maharashtra 410504, India">Shri Vighneshwar Temple - Ozar</option>
+        <option value="Girijatmaj Lenyadri Ganapati Ashtavinayak At Post : Golegaon, Taluka : Junnar, Dist. : Pune JUNNR, Golegaon, Maharashtra 410502, India">Shri Girijatmaj Temple - Lenyadri</option>
+
+      </select>
+      <b>End: </b>
+      <select id="end">
+        <option value="Khopoli Ganpati Mahad Rd, Mahad, Maharashtra 410203, India">Shri VaradVinayak</option>
+        <option value="SH92, Pali, Maharashtra 410205, India">Shri Ballaleshwar</option>
+        <option value="Q63R+MP3, MH SH 27, Ranjangaon, Maharashtra 412209, India">Shri MahaGanapati - Ranjangaon</option>
+        <option value="Theur Rd, Theur, Maharashtra 412110, India">Shri Chintamani</option>
+        <option value="Siddhatek, Siddhtek, Maharashtra 414403, India">Shri SiddhiVinayak - Siddhatek</option>
+        <option value="78H8+6XW, Morgaon, Maharashtra 412304, India">Shri Mayureshwar - Morgaon</option>
+        <option value="Shree Vighnahar Ganapati Mandir,Ozar, Maharashtra 410504, India">Shri Vighneshwar Temple - Ozar</option>
+        <option value="Girijatmaj Lenyadri Ganapati Ashtavinayak At Post : Golegaon, Taluka : Junnar, Dist. : Pune JUNNR, Golegaon, Maharashtra 410502, India">Shri Girijatmaj Temple - Lenyadri</option>
+
+      </select>
+    </div>
+    <div id="map"  style="color:blue;"><p>Hr map will be displayd</p></div>
+    <script>
+      function initMap() {
+        console.log(`inside initMap`)
+        const directionsService = new google.maps.DirectionsService();
+        const directionsRenderer = new google.maps.DirectionsRenderer();
+        const map = new google.maps.Map(document.getElementById("map"), {
+          zoom: 7,
+          center: { lat: 18.5315, lng: 73.84426 },
+        });
+      
+        directionsRenderer.setMap(map);
+      
+        const onChangeHandler = function () {
+          console.log(`Inside onChangeHandler`);
+          calculateAndDisplayRoute(directionsService, directionsRenderer);
+        };
+      
+        document.getElementById("start").addEventListener("change", onChangeHandler); 
+        document.getElementById("end").addEventListener("change", onChangeHandler);
+      }
+      
+      function calculateAndDisplayRoute(directionsService, directionsRenderer) {
+        console.log('calculateAndDisplayRoute');
+        console.log(document.getElementById("start").value);
+        console.log(document.getElementById("end").value);
+        
+        if(document.getElementById("start").value === document.getElementById("end").value){
+          alert("You have selectes same Origin and Destination values !");
+          document.getElementById("start").value = "Khopoli Ganpati Mahad Rd, Mahad, Maharashtra 410203, India";
+          document.getElementById("end").value = "";
+        }
+        var request = {
+          origin: document.getElementById("start").value,
+          destination: document.getElementById("end").value,
+          travelMode: 'DRIVING'
+      };
+        
+        
+        
+      directionsService.route(request, function(response, status) {
+        if (status == 'OK') {
+            console.log(`I got response ${response}`)
+            directionsRenderer.setDirections(response);
+        }
+
+     });
+      }
+      window.onload = initMap;
+      {% comment %} window.initMap = initMap; {% endcomment %}
+    </script>
+    
+    
+    
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC-XswH7ZFfAcojihasZo4AYAtQvvqJBU0&callback=initMap"></script>
+
+
+</body>
+
+</html>

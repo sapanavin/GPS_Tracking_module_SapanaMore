@@ -1,0 +1,51 @@
+<!-- all_profiles.html -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>All User Profiles</title>
+    <style>
+        table {
+            width: 80%;
+            border-collapse: collapse;
+            margin: 20px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+
+<h2>All User Profiles</h2>
+
+{% if user_profiles %}
+    <table>
+        <thead>
+            <tr>
+                <th>Username</th>
+                <th>Email</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user_profile in user_profiles %}
+                <tr>
+                    <td>{{ user_profile.username }}</td>
+                    <td>{{ user_profile.email }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <p>No user profiles found.</p>
+{% endif %}
+
+</body>
+</html>

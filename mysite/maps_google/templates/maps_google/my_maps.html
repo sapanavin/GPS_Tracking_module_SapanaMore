@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h1>First Google Map</h1>
+
+<div id="googleMap" style="width:100%;height:500px;"></div>
+
+<script>
+function myMap() {
+var mapProp= {
+  center:new google.maps.LatLng(38.89778796885204, -77.03660765882574),
+  zoom:15,
+  mapId: 'DEMO_MAP_ID',
+  title:'White House'
+  
+};
+
+var map = new google.maps.Map(document.getElementById("googleMap"),mapProp);
+}
+</script>
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC-XswH7ZFfAcojihasZo4AYAtQvvqJBU0&callback=myMap"></script>
+
+</body>
+</html>
+{% comment %} 18.664245894748696, 74.38319869350427 {% endcomment %}

@@ -1,0 +1,56 @@
+<!-- mymap.html (Django Template) -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Custom Marker Icons</title>
+    <style>
+        #map {
+            height: 100vh;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+<p>Places are : {{ places}}</p>
+
+<div id="map"></div>
+
+<script>
+    function initMap() {
+        var map = new google.maps.Map(document.getElementById('map'), {
+            zoom: 12,
+            center: {lat:  19.222, lng:  73.12148}  // Default center (adjust as needed)
+        });
+        
+        // Django variable containing places data
+        var places = {{ places|safe }};  // |safe is used for objects to prevent HTML escaping
+        // Custom marker icon
+        var customIcon = {
+            url: 'http://maps.gstatic.com/mapfiles/ms2/micons/bus.png',  // Replace with the path to your custom icon
+            scaledSize: new google.maps.Size(20, 20)  // Adjust the size of the icon
+        };
+
+        // Add markers for each place
+        // Destructure places in the script
+        
+           
+        // Add markers for each place
+        places.forEach(function(place) {
+            console.log(`place :====> ${ place.lat }: ${ place.lng}`)
+            var marker = new google.maps.Marker({
+                position: {lat: place.lat, lng: place.lng},
+                map: map,
+                title: 'I am here',
+                icon: customIcon
+            });
+        });
+    }
+</script>
+
+<script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC-XswH7ZFfAcojihasZo4AYAtQvvqJBU0&callback=initMap">
+</script>
+
+</body>
+</html>
